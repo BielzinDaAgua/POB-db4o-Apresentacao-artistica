@@ -50,6 +50,13 @@ class ApresentacaoDAOTest {
         cidadeDAO.close();
     }
 
+
+    //Este teste verifica a criação e leitura de uma apresentação.
+
+    //Cria uma data, um artista e uma cidade.
+    //Cria uma apresentação associada ao artista e à cidade.
+    //Salva a apresentação no DAO.
+    //Verifica se a leitura do DAO retorna exatamente uma apresentação e se o nome do artista associado é "Artista Teste".
     @Test
     void testCreateAndReadApresentacao() throws ParseException {
         Date data = sdf.parse("01/08/2024");
@@ -67,6 +74,14 @@ class ApresentacaoDAOTest {
         assertEquals("Artista Teste", apresentacoes.get(0).getArtista().getNome());
     }
 
+
+    //Este teste verifica a atualização de uma apresentação.
+
+    //Cria uma data, um artista e uma cidade.
+    //Cria uma apresentação associada ao artista e à cidade.
+    //Salva a apresentação no DAO.
+    //Atualiza o preço do ingresso da apresentação.
+    //Verifica se a leitura do DAO retorna a apresentação com o preço do ingresso atualizado para 60.0.
     @Test
     void testUpdateApresentacao() throws ParseException {
         Date data = sdf.parse("01/08/2024");
@@ -86,6 +101,13 @@ class ApresentacaoDAOTest {
         assertEquals(60.0, apresentacoes.get(0).getPrecoIngresso());
     }
 
+    //Este teste verifica a exclusão de uma apresentação.
+
+    //Cria uma data, um artista e uma cidade.
+    //Cria uma apresentação associada ao artista e à cidade.
+    //Salva a apresentação no DAO.
+    //Exclui a apresentação do DAO.
+    //Verifica se a leitura do DAO retorna uma lista vazia, indicando que a apresentação foi excluída com sucesso.
     @Test
     void testDeleteApresentacao() throws ParseException {
         Date data = sdf.parse("01/08/2024");
@@ -104,6 +126,14 @@ class ApresentacaoDAOTest {
         assertTrue(apresentacoes.isEmpty());
     }
 
+
+    //Este teste verifica a listagem de apresentações por data.
+
+    //Cria duas datas, um artista e uma cidade.
+    //Cria duas apresentações em datas diferentes associadas ao mesmo artista e cidade.
+    //Salva ambas as apresentações no DAO.
+    //Lista as apresentações para a primeira data.
+    //Verifica se a listagem retorna exatamente uma apresentação e se a data dessa apresentação é igual à primeira data.
     @Test
     void testListarApresentacoesPorData() throws ParseException {
         Date data1 = sdf.parse("01/08/2024");

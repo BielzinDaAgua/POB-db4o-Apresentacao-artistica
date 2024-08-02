@@ -26,6 +26,7 @@ public class Fachada {
     }
 
     public void createArtista(Artista artista) {
+        //Um artista deve ter no mínimo 18 anos para ser cadastrado.
         if (artista.getIdade() < IDADE_MINIMA_ARTISTA) {
             throw ExcecaoNegocio.validacao("Artista deve ter no mínimo " + IDADE_MINIMA_ARTISTA + " anos.");
         }
@@ -37,11 +38,13 @@ public class Fachada {
     }
 
     public void createApresentacao(Apresentacao apresentacao) {
+        //O preço do ingresso para uma apresentação deve ser no mínimo 10.0 unidades monetárias.
         if (apresentacao.getPrecoIngresso() < PRECO_MINIMO_INGRESSO) {
             throw ExcecaoNegocio.validacao("Preço do ingresso deve ser no mínimo " + PRECO_MINIMO_INGRESSO);
         }
 
         List<Apresentacao> apresentacoesExistentes = listarApresentacoesPorData(apresentacao.getData());
+        //Um artista não pode ter mais de uma apresentação na mesma cidade na mesma data.
         for (Apresentacao a : apresentacoesExistentes) {
             if (a.getCidade().getNome().equals(apresentacao.getCidade().getNome()) &&
                     a.getArtista().getNome().equals(apresentacao.getArtista().getNome())) {
@@ -49,6 +52,7 @@ public class Fachada {
             }
         }
 
+        //O número de ingressos vendidos não pode exceder a capacidade de público do local (cidade).
         if (apresentacao.getNumeroDeIngressosVendidos() > apresentacao.getCidade().getCapacidadePublico()) {
             throw ExcecaoNegocio.validacao("Número de ingressos vendidos excede a capacidade do local.");
         }

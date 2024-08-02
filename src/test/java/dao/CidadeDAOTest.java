@@ -31,6 +31,11 @@ class CidadeDAOTest {
         cidadeDAO.close();
     }
 
+    //Este teste verifica a criação e leitura de uma cidade.
+
+    //Cria uma cidade e a salva no DAO.
+    //Lê todas as cidades do DAO.
+    //Verifica se há apenas uma cidade no DAO e se o nome dessa cidade é "Cidade T
     @Test
     void testCreateAndReadCidade() {
         Cidade cidade = new Cidade("Cidade Teste", null);
@@ -41,6 +46,12 @@ class CidadeDAOTest {
         assertEquals("Cidade Teste", cidades.get(0).getNome());
     }
 
+    //Este teste verifica a atualização de uma cidade.
+
+    //Cria uma cidade e a salva no DAO.
+    //Atualiza o nome da cidade para "Cidade Atualizada".
+    //Lê todas as cidades do DAO.
+    //Verifica se o nome da cidade foi atualizado para "Cidade Atualizada".
     @Test
     void testUpdateCidade() {
         Cidade cidade = new Cidade("Cidade Teste", null);
@@ -53,6 +64,9 @@ class CidadeDAOTest {
         assertEquals("Cidade Atualizada", cidades.get(0).getNome());
     }
 
+    //Este teste verifica a exclusão de uma cidade.
+
+    //Este teste verifica a exclusão de uma cidade.
     @Test
     void testDeleteCidade() {
         Cidade cidade = new Cidade("Cidade Teste", null);

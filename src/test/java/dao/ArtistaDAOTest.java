@@ -51,6 +51,11 @@ class ArtistaDAOTest {
         cidadeDAO.close();
     }
 
+    //Este teste verifica a criação e leitura de um artista.
+
+    //Cria um artista e o salva no DAO.
+    //Lê todos os artistas do DAO.
+    //Verifica se há apenas um artista no DAO e se o nome desse artista é "Artista Teste".
     @Test
     void testCreateAndReadArtista() {
         Artista artista = new Artista("Artista Teste", "Rock", 25, new ArrayList<>());
@@ -61,6 +66,12 @@ class ArtistaDAOTest {
         assertEquals("Artista Teste", artistas.get(0).getNome());
     }
 
+    //Este teste verifica a atualização de um artista.
+
+    //Cria um artista e o salva no DAO.
+    //Atualiza o gênero musical do artista para "Pop".
+    //Lê todos os artistas do DAO.
+    //Verifica se o gênero musical do artista foi atualizado para "Pop".
     @Test
     void testUpdateArtista() {
         Artista artista = new Artista("Artista Teste", "Rock", 25, new ArrayList<>());
@@ -73,6 +84,12 @@ class ArtistaDAOTest {
         assertEquals("Pop", artistas.get(0).getGeneroMusical());
     }
 
+    //Este teste verifica a exclusão de um artista.
+
+    //Cria um artista e o salva no DAO.
+    //Exclui o artista do DAO.
+    //Lê todos os artistas do DAO.
+    //Verifica se não há artistas no DAO (lista vazia).
     @Test
     void testDeleteArtista() {
         Artista artista = new Artista("Artista Teste", "Rock", 25, new ArrayList<>());
@@ -84,6 +101,13 @@ class ArtistaDAOTest {
         assertTrue(artistas.isEmpty());
     }
 
+    //Este teste verifica a listagem de artistas por data e cidade.
+
+    //Cria uma data e uma cidade.
+    //Cria dois artistas e os salva no DAO.
+    //Cria duas apresentações para os artistas na cidade e data especificadas.
+    //Lê todos os artistas do DAO que têm apresentações na cidade e data especificadas.
+    //Verifica se há dois artistas retornados.
     @Test
     void testListarArtistasPorDataECidade() throws ParseException {
         Date data = sdf.parse("01/08/2024");
@@ -105,6 +129,14 @@ class ArtistaDAOTest {
         assertEquals(2, artistas.size());
     }
 
+    //Este teste verifica a listagem de artistas com mais de um certo número de apresentações.
+
+    //Cria uma data e uma cidade.
+    //Cria um artista e o salva no DAO.
+    //Cria duas apresentações para o artista na cidade e data especificadas.
+    //Atualiza o artista para associar as apresentações.
+    //Lê todos os artistas do DAO que têm mais de uma apresentação.
+    //Verifica se há um artista retornado e se o nome desse artista é "Artista Teste".
     @Test
     void testListarArtistasComMaisDeNApresentacoes() throws ParseException {
         Date data = sdf.parse("01/08/2024");

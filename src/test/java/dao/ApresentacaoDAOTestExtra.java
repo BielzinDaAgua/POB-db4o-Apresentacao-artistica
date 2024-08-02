@@ -49,6 +49,11 @@ class ApresentacaoDAOTestExtras {
         cidadeDAO.close();
     }
 
+    //Este teste verifica a criação de uma apresentação sem um artista ou sem uma cidade.
+
+    //Tenta criar uma apresentação sem um artista (apresentacaoSemArtista).
+    //Tenta criar uma apresentação sem uma cidade (apresentacaoSemCidade).
+    //Verifica se uma exceção IllegalArgumentException é lançada em ambos os casos.
     @Test
     void testCreateApresentacaoWithoutArtistaOrCidade() throws ParseException {
         Date data = sdf.parse("01/08/2024");
@@ -61,6 +66,11 @@ class ApresentacaoDAOTestExtras {
     }
 
 
+    //Este teste verifica a criação de apresentações duplicadas.
+
+    //Cria duas apresentações (apresentacao1 e apresentacao2) com os mesmos atributos.
+    //Tenta criar ambas as apresentações no DAO.
+    //Verifica se uma exceção IllegalArgumentException é lançada ao tentar criar a segunda apresentação duplicada e se a mensagem da exceção é "Apresentação duplicada não é permitida.".
     @Test
     void testCreateDuplicateApresentacao() throws ParseException {
         Date data = sdf.parse("01/08/2024");
@@ -80,6 +90,11 @@ class ApresentacaoDAOTestExtras {
     }
 
 
+    //Este teste verifica a performance de leitura do DAO com um grande número de entradas.
+
+    //Cria 1000 apresentações no DAO.
+    //Mede o tempo necessário para ler todas as apresentações do DAO.
+    //Verifica se a leitura de todas as apresentações leva menos de 1000 milissegundos (1 segundo).
     @Test
     void testReadPerformance() {
         for (int i = 0; i < 1000; i++) {
@@ -94,6 +109,13 @@ class ApresentacaoDAOTestExtras {
         assertTrue(duration < 1000);
     }
 
+    //Este teste verifica a capacidade do DAO de lidar com atualizações concorrentes.
+
+    //Cria uma data, um artista e uma cidade.
+    //Cria uma apresentação associada ao artista e à cidade.
+    //Inicia dois threads que tentam atualizar o preço do ingresso da apresentação para valores diferentes (60.0 e 70.0) simultaneamente.
+    //Aguarda a conclusão dos dois threads.
+    //Verifica se a atualização resultante do preço do ingresso é igual a 60.0 ou 70.0, indicando que uma das atualizações concorrentes foi aplicada com sucesso.
     @Test
     void testConcurrentUpdates() throws InterruptedException, ParseException {
         Date data = sdf.parse("01/08/2024");
