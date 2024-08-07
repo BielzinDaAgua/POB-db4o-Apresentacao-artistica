@@ -22,7 +22,7 @@ public class Util {
             config.common().objectClass(Cidade.class).cascadeOnUpdate(true);
             config.common().objectClass(Cidade.class).cascadeOnActivate(true);
 
-            config.common().objectClass(Apresentacao.class).cascadeOnDelete(true);
+            config.common().objectClass(Apresentacao.class).cascadeOnDelete(false);
             config.common().objectClass(Apresentacao.class).cascadeOnUpdate(true);
             config.common().objectClass(Apresentacao.class).cascadeOnActivate(true);
 
