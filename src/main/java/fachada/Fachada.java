@@ -1,13 +1,12 @@
 package fachada;
 
-import dao.ArtistaDAO;
 import dao.ApresentacaoDAO;
+import dao.ArtistaDAO;
 import dao.CidadeDAO;
-import model.Artista;
-import model.Apresentacao;
-import model.Cidade;
-import util.Util;
 import excecoes.ExcecaoNegocio;
+import model.Apresentacao;
+import model.Artista;
+import model.Cidade;
 
 import java.util.Date;
 import java.util.List;
@@ -21,12 +20,12 @@ public class Fachada {
 
     public Fachada() {
         artistaDAO = new ArtistaDAO();
-        apresentacaoDAO = new ApresentacaoDAO();
         cidadeDAO = new CidadeDAO();
+        apresentacaoDAO = new ApresentacaoDAO();
+
     }
 
     public void createArtista(Artista artista) {
-        //Um artista deve ter no mínimo 18 anos para ser cadastrado.
         if (artista.getIdade() < IDADE_MINIMA_ARTISTA) {
             throw ExcecaoNegocio.validacao("Artista deve ter no mínimo " + IDADE_MINIMA_ARTISTA + " anos.");
         }
@@ -38,13 +37,11 @@ public class Fachada {
     }
 
     public void createApresentacao(Apresentacao apresentacao) {
-        //O preço do ingresso para uma apresentação deve ser no mínimo 10.0 unidades monetárias.
         if (apresentacao.getPrecoIngresso() < PRECO_MINIMO_INGRESSO) {
             throw ExcecaoNegocio.validacao("Preço do ingresso deve ser no mínimo " + PRECO_MINIMO_INGRESSO);
         }
 
         List<Apresentacao> apresentacoesExistentes = listarApresentacoesPorData(apresentacao.getData());
-        //Um artista não pode ter mais de uma apresentação na mesma cidade na mesma data.
         for (Apresentacao a : apresentacoesExistentes) {
             if (a.getCidade().getNome().equals(apresentacao.getCidade().getNome()) &&
                     a.getArtista().getNome().equals(apresentacao.getArtista().getNome())) {
@@ -52,7 +49,6 @@ public class Fachada {
             }
         }
 
-        //O número de ingressos vendidos não pode exceder a capacidade de público do local (cidade).
         if (apresentacao.getNumeroDeIngressosVendidos() > apresentacao.getCidade().getCapacidadePublico()) {
             throw ExcecaoNegocio.validacao("Número de ingressos vendidos excede a capacidade do local.");
         }
@@ -122,6 +118,12 @@ public class Fachada {
 
     public void deleteArtista(Artista artista) {
         try {
+            // Primeiro exclua as apresentações associadas ao artista
+            List<Apresentacao> apresentacoes = apresentacaoDAO.listarApresentacoesPorArtista(artista.getNome());
+            for (Apresentacao apresentacao : apresentacoes) {
+                apresentacaoDAO.delete(apresentacao);
+            }
+            // Depois exclua o artista
             artistaDAO.delete(artista);
         } catch (Exception e) {
             throw ExcecaoNegocio.conexao("Erro ao tentar deletar o artista: " + e.getMessage());
@@ -138,6 +140,12 @@ public class Fachada {
 
     public void deleteCidade(Cidade cidade) {
         try {
+            // Primeiro exclua as apresentações associadas à cidade
+            List<Apresentacao> apresentacoes = apresentacaoDAO.listarApresentacoesPorCidade(cidade.getNome());
+            for (Apresentacao apresentacao : apresentacoes) {
+                apresentacaoDAO.delete(apresentacao);
+            }
+            // Depois exclua a cidade
             cidadeDAO.delete(cidade);
         } catch (Exception e) {
             throw ExcecaoNegocio.conexao("Erro ao tentar deletar a cidade: " + e.getMessage());
@@ -164,11 +172,10 @@ public class Fachada {
         try {
             return artistaDAO.listarArtistasComMaisDeNApresentacoes(n);
         } catch (Exception e) {
-            throw ExcecaoNegocio.conexao("Erro ao listar artistas com mais de " + n + " apresentações: " + e.getMessage());
+            throw ExcecaoNegocio.conexao("Erro ao listar artistas com mais de N apresentações: " + e.getMessage());
         }
     }
 
-    // Busca artista por nome
     public Artista buscarArtistaPorNome(String nome) {
         try {
             return artistaDAO.read().stream()
@@ -180,7 +187,6 @@ public class Fachada {
         }
     }
 
-    // Busca cidade por nome
     public Cidade buscarCidadePorNome(String nome) {
         try {
             return cidadeDAO.read().stream()
@@ -192,14 +198,10 @@ public class Fachada {
         }
     }
 
+
     public void close() {
-        try {
-            artistaDAO.close();
-            apresentacaoDAO.close();
-            cidadeDAO.close();
-        } catch (Exception e) {
-            throw ExcecaoNegocio.conexao("Erro ao fechar as conexões: " + e.getMessage());
-        }
-        Util.closeConnection();
+        artistaDAO.close();
+        apresentacaoDAO.close();
+        cidadeDAO.close();
     }
 }

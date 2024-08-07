@@ -7,8 +7,9 @@ public class Cidade {
     private int capacidadePublico;
     private List<Apresentacao> listaApresentacao;
 
-    public Cidade(String nome, List<Apresentacao> listaApresentacao) {
+    public Cidade(String nome, int capacidadePublico, List<Apresentacao> listaApresentacao) {
         this.nome = nome;
+        this.capacidadePublico = capacidadePublico;
         this.listaApresentacao = listaApresentacao;
     }
 

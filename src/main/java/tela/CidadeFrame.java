@@ -1,17 +1,20 @@
 package tela;
 
 import fachada.Fachada;
+import model.Apresentacao;
 import model.Cidade;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CidadeFrame extends JFrame {
     private Fachada fachada;
     private JTextField nomeField;
+    private JTextField capacidadeField;
     private JTextArea listaCidadesArea;
     private JButton cadastrarButton, excluirButton, listarButton;
 
@@ -23,11 +26,15 @@ public class CidadeFrame extends JFrame {
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(4, 2));
+        panel.setLayout(new GridLayout(5, 2));
 
         panel.add(new JLabel("Nome:"));
         nomeField = new JTextField();
         panel.add(nomeField);
+
+        panel.add(new JLabel("Capacidade:"));
+        capacidadeField = new JTextField();
+        panel.add(capacidadeField);
 
         cadastrarButton = new JButton("Cadastrar");
         panel.add(cadastrarButton);
@@ -69,9 +76,13 @@ public class CidadeFrame extends JFrame {
     private void cadastrarCidade() {
         try {
             String nome = nomeField.getText();
-            Cidade cidade = new Cidade(nome, null);
+            int capacidade = Integer.parseInt(capacidadeField.getText());
+            List<Apresentacao> listaApresentacao = new ArrayList<>();
+            Cidade cidade = new Cidade(nome, capacidade, listaApresentacao);
             fachada.createCidade(cidade);
             JOptionPane.showMessageDialog(this, "Cidade cadastrada com sucesso!");
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Capacidade deve ser um número inteiro.");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro ao cadastrar cidade: " + e.getMessage());
         }
@@ -98,7 +109,7 @@ public class CidadeFrame extends JFrame {
             List<Cidade> cidades = fachada.listarCidades();
             listaCidadesArea.setText("");
             for (Cidade cidade : cidades) {
-                listaCidadesArea.append("Nome: " + cidade.getNome() + "\n");
+                listaCidadesArea.append("Nome: " + cidade.getNome() + ", Capacidade: " + cidade.getCapacidadePublico() + "\n");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro ao listar cidades: " + e.getMessage());

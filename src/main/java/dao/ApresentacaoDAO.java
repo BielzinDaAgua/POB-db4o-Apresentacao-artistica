@@ -49,6 +49,24 @@ public class ApresentacaoDAO {
         return query.execute();
     }
 
+    public List<Apresentacao> listarApresentacoesPorArtista(String artistaNome) {
+        Query query = db.query();
+        query.constrain(Apresentacao.class);
+        Query artistaQuery = query.descend("artista");
+        artistaQuery.descend("nome").constrain(artistaNome);
+        return query.execute();
+    }
+
+    public List<Apresentacao> listarApresentacoesPorCidade(String cidadeNome) {
+        Query query = db.query();
+        query.constrain(Apresentacao.class);
+        Query cidadeQuery = query.descend("cidade");
+        cidadeQuery.descend("nome").constrain(cidadeNome);
+        return query.execute();
+    }
+
+
+
     public void close() {
         Util.closeConnection();
     }

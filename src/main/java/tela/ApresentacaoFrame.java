@@ -24,77 +24,147 @@ public class ApresentacaoFrame extends JFrame {
     public ApresentacaoFrame(Fachada fachada) {
         this.fachada = fachada;
         setTitle("Gerenciamento de Apresentações");
-        setSize(600, 400);
+        setSize(600, 500);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(10, 2, 5, 5)); // 8 linhas e 2 colunas com espaçamento de 5 pixels
+        panel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
         JLabel idLabel = new JLabel("ID:");
         idLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        panel.add(idLabel);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 1;
+        panel.add(idLabel, gbc);
+
         idField = new JTextField();
         idField.setHorizontalAlignment(JTextField.CENTER);
-        panel.add(idField);
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.gridwidth = 1;
+        panel.add(idField, gbc);
 
         JLabel dataLabel = new JLabel("Data (dd/MM/yyyy):");
         dataLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        panel.add(dataLabel);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 1;
+        panel.add(dataLabel, gbc);
+
         dataField = new JTextField();
         dataField.setHorizontalAlignment(JTextField.CENTER);
-        panel.add(dataField);
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.gridwidth = 1;
+        panel.add(dataField, gbc);
 
         JLabel artistaLabel = new JLabel("Artista:");
         artistaLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        panel.add(artistaLabel);
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridwidth = 1;
+        panel.add(artistaLabel, gbc);
+
         artistaField = new JTextField();
         artistaField.setHorizontalAlignment(JTextField.CENTER);
-        panel.add(artistaField);
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.gridwidth = 1;
+        panel.add(artistaField, gbc);
 
         JLabel cidadeLabel = new JLabel("Cidade:");
         cidadeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        panel.add(cidadeLabel);
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.gridwidth = 1;
+        panel.add(cidadeLabel, gbc);
+
         cidadeField = new JTextField();
         cidadeField.setHorizontalAlignment(JTextField.CENTER);
-        panel.add(cidadeField);
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        gbc.gridwidth = 1;
+        panel.add(cidadeField, gbc);
 
         JLabel precoLabel = new JLabel("Preço do Ingresso:");
         precoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        panel.add(precoLabel);
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.gridwidth = 1;
+        panel.add(precoLabel, gbc);
+
         precoField = new JTextField();
         precoField.setHorizontalAlignment(JTextField.CENTER);
-        panel.add(precoField);
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        gbc.gridwidth = 1;
+        panel.add(precoField, gbc);
 
         JLabel duracaoLabel = new JLabel("Duração (min):");
         duracaoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        panel.add(duracaoLabel);
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        gbc.gridwidth = 1;
+        panel.add(duracaoLabel, gbc);
+
         duracaoField = new JTextField();
         duracaoField.setHorizontalAlignment(JTextField.CENTER);
-        panel.add(duracaoField);
+        gbc.gridx = 1;
+        gbc.gridy = 5;
+        gbc.gridwidth = 1;
+        panel.add(duracaoField, gbc);
 
         JLabel ingressosLabel = new JLabel("Ingressos Vendidos:");
         ingressosLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        panel.add(ingressosLabel);
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        gbc.gridwidth = 1;
+        panel.add(ingressosLabel, gbc);
+
         ingressosField = new JTextField();
         ingressosField.setHorizontalAlignment(JTextField.CENTER);
-        panel.add(ingressosField);
+        gbc.gridx = 1;
+        gbc.gridy = 6;
+        gbc.gridwidth = 1;
+        panel.add(ingressosField, gbc);
 
         criarButton = new JButton("Criar");
-        panel.add(criarButton);
+        gbc.gridx = 0;
+        gbc.gridy = 7;
+        gbc.gridwidth = 1;
+        panel.add(criarButton, gbc);
 
         alterarButton = new JButton("Alterar");
-        panel.add(alterarButton);
+        gbc.gridx = 1;
+        gbc.gridy = 7;
+        gbc.gridwidth = 1;
+        panel.add(alterarButton, gbc);
 
         excluirButton = new JButton("Excluir");
-        panel.add(excluirButton);
+        gbc.gridx = 0;
+        gbc.gridy = 8;
+        gbc.gridwidth = 1;
+        panel.add(excluirButton, gbc);
 
         listarButton = new JButton("Listar");
-        panel.add(listarButton);
+        gbc.gridx = 1;
+        gbc.gridy = 8;
+        gbc.gridwidth = 1;
+        panel.add(listarButton, gbc);
 
-        listaApresentacoesArea = new JTextArea();
+        listaApresentacoesArea = new JTextArea(10, 30);
         listaApresentacoesArea.setEditable(false);
-        panel.add(new JScrollPane(listaApresentacoesArea));
+        JScrollPane scrollPane = new JScrollPane(listaApresentacoesArea);
+        gbc.gridx = 0;
+        gbc.gridy = 9;
+        gbc.gridwidth = 2;
+        gbc.gridheight = 2;
+        gbc.fill = GridBagConstraints.BOTH;
+        panel.add(scrollPane, gbc);
 
         add(panel);
 
@@ -197,13 +267,22 @@ public class ApresentacaoFrame extends JFrame {
     }
 
     private void listarApresentacoes() {
-        List<Apresentacao> apresentacoes = fachada.listarApresentacoes();
-        listaApresentacoesArea.setText("");
-        for (Apresentacao apresentacao : apresentacoes) {
-            listaApresentacoesArea.append("ID: " + apresentacao.getId() + " | Data: " + apresentacao.getData() + " | Artista: "
-                    + apresentacao.getArtista().getNome() + " | Cidade: " + apresentacao.getCidade().getNome() + " | Preço: "
-                    + apresentacao.getPrecoIngresso() + " | Duração: " + apresentacao.getDuracao() + " | Ingressos Vendidos: "
-                    + apresentacao.getNumeroDeIngressosVendidos() + "\n");
+        try {
+            List<Apresentacao> apresentacoes = fachada.listarApresentacoes();
+            listaApresentacoesArea.setText("");
+            for (Apresentacao apresentacao : apresentacoes) {
+                listaApresentacoesArea.append(
+                        "ID: " + apresentacao.getId() + " / " +
+                                "Data: " + apresentacao.getData() + " \n " +
+                                "Artista: " + apresentacao.getArtista().getNome() + " / " +
+                                "Cidade: " + apresentacao.getCidade().getNome() + " \n " +
+                                "Preço do Ingresso: " + apresentacao.getPrecoIngresso() + " / " +
+                                "Duração: " + apresentacao.getDuracao() + " minutos" + " \n " +
+                                "Ingressos Vendidos: " + apresentacao.getNumeroDeIngressosVendidos() + "\n \n"
+                );
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao listar apresentações: " + e.getMessage());
         }
     }
 }
