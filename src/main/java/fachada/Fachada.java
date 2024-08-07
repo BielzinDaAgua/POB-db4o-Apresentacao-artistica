@@ -160,6 +160,14 @@ public class Fachada {
         }
     }
 
+    public List<Apresentacao> listarApresentacoesPorArtista(String nomeArtista) {
+        try {
+            return apresentacaoDAO.listarApresentacoesPorArtista(nomeArtista);
+        } catch (Exception e) {
+            throw ExcecaoNegocio.conexao("Erro ao listar apresentações por artista: " + e.getMessage());
+        }
+    }
+
     public List<Artista> listarArtistasPorDataECidade(String cidadeNome, Date data) {
         try {
             return artistaDAO.listarArtistasPorDataECidade(cidadeNome, data);
