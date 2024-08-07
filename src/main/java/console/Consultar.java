@@ -21,12 +21,13 @@ public class Consultar {
                 System.out.println(apresentacao.getArtista().getNome() + " em " + apresentacao.getCidade().getNome());
             }
 
-            // Consulta 2: Listar artistas por data e cidade
-            String cidadeNome = "Cidade1";
-            List<Artista> artistasPorDataECidade = fachada.listarArtistasPorDataECidade(cidadeNome, data);
-            System.out.println("\nArtistas na cidade " + cidadeNome + " na data " + data + ":");
-            for (Artista artista : artistasPorDataECidade) {
-                System.out.println(artista.getNome());
+            // Consulta 2: Listar todas as apresentações de um determinado artista
+            String nomeArtista = "Artista1";
+            List<Apresentacao> apresentacoesDoArtista = fachada.listarApresentacoesPorArtista(nomeArtista);
+            System.out.println("\nApresentações do artista " + nomeArtista + ":");
+            for (Apresentacao apresentacao : apresentacoesDoArtista) {
+                System.out.println("Na cidade " + apresentacao.getCidade().getNome() + " em " + apresentacao.getData());
+ 
             }
 
             // Consulta 3: Listar artistas com mais de N apresentações
